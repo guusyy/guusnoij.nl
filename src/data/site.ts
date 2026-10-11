@@ -7,6 +7,9 @@ export const ZAKELIJK = prod ? 'https://zakelijk.guusnoij.nl/' : '/zakelijk/';
 // Vindbaarheid: false geeft elke pagina noindex (de preview op workers.dev krijgt dat altijd via de Worker).
 export const INDEXEREN = true;
 
+// Cloudflare Web Analytics (zonder cookies). Het token is publiek, het staat in elke pagina.
+export const ANALYTICS_TOKEN = '0c0cbef16dc24dadb6977ea67ff0b9db';
+
 export const SITE_PERSOONLIJK = 'https://guusnoij.nl';
 export const SITE_ZAKELIJK = 'https://zakelijk.guusnoij.nl';
 

@@ -5,7 +5,7 @@ import Kop from '../components/Kop.astro';
 import Wissel from '../components/Wissel.astro';
 import Palet from '../components/Palet.astro';
 import Kat from '../components/Kat.astro';
-import { INDEXEREN, SITE_PERSOONLIJK, SITE_ZAKELIJK } from '../data/site';
+import { ANALYTICS_TOKEN, INDEXEREN, SITE_PERSOONLIJK, SITE_ZAKELIJK } from '../data/site';
 
 interface Props {
   modus: 'licht' | 'donker';
@@ -59,6 +59,9 @@ const siteNaam = zakelijk ? 'Guus Noij Design & Development' : 'Guus Noij';
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <ClientRouter />
+  {import.meta.env.PROD && !import.meta.env.PUBLIC_RELATIEF && (
+    <script is:inline defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: ANALYTICS_TOKEN, spa: true })}></script>
+  )}
   <script is:inline>
     // Na een wissel tussen persoonlijk en zakelijk: inhoud zacht laten verschijnen en de ?w uit de url halen.
     if (location.search.includes('w=1')) {
