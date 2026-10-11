@@ -4,9 +4,8 @@ const prod = import.meta.env.PROD && !import.meta.env.PUBLIC_RELATIEF;
 export const PERSOONLIJK = prod ? 'https://guusnoij.nl/' : '/';
 export const ZAKELIJK = prod ? 'https://zakelijk.guusnoij.nl/' : '/zakelijk/';
 
-// Vindbaarheid: zolang dit false is, krijgt elke pagina noindex. Bij aanzetten ook de X-Robots-Tag
-// in cloudflare/src/index.ts weghalen.
-export const INDEXEREN = false;
+// Vindbaarheid: false geeft elke pagina noindex (de preview op workers.dev krijgt dat altijd via de Worker).
+export const INDEXEREN = true;
 
 export const SITE_PERSOONLIJK = 'https://guusnoij.nl';
 export const SITE_ZAKELIJK = 'https://zakelijk.guusnoij.nl';

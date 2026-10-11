@@ -69,7 +69,8 @@ async function nietGevonden(pad: string, request: Request): Promise<Response> {
 export default {
   async fetch(request) {
     const res = await serveer(request);
-    // Nog niet indexeren (okt 2026). Weghalen samen met de meta robots in src/layouts/Basis.astro.
+    // De echte domeinen zijn vindbaar (sinds 11-10-2026); de preview op workers.dev blijft buiten zoekmachines.
+    if (!new URL(request.url).hostname.endsWith('.workers.dev')) return res;
     const kop = new Headers(res.headers);
     kop.set('X-Robots-Tag', 'noindex, nofollow');
     return new Response(res.body, { status: res.status, statusText: res.statusText, headers: kop });

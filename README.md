@@ -32,4 +32,4 @@ Preview on workers.dev without the custom domains:
 PUBLIC_RELATIEF=1 npm run build && cd cloudflare && npx cf deploy --mode preview
 ```
 
-Both sites are `noindex` for now (meta tag in `src/layouts/Basis.astro` and `X-Robots-Tag` in `cloudflare/src/index.ts`).
+Both sites are indexable (`INDEXEREN` in `src/data/site.ts`); the workers.dev preview always gets `X-Robots-Tag: noindex`.
