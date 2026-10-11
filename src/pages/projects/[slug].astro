@@ -4,7 +4,10 @@ import Basis from '../../layouts/Basis.astro';
 import Voet from '../../components/Voet.astro';
 import PaginaKop from '../../components/PaginaKop.astro';
 import { navPersoonlijk } from '../../data/persoonlijk';
+import { getImage } from 'astro:assets';
 import { projecten, type Project } from '../../data/projecten';
+import { grafiek, kruimelpad } from '../../data/schema';
+import { SITE_PERSOONLIJK } from '../../data/site';
 
 export function getStaticPaths() {
   return projecten.map((p) => ({ params: { slug: p.slug }, props: { p } }));
@@ -12,8 +15,26 @@ export function getStaticPaths() {
 const { p } = Astro.props as { p: Project };
 const i = projecten.indexOf(p);
 const volgende = projecten[(i + 1) % projecten.length];
+// Meta-beschrijving: eerste alinea (of de korte omschrijving), afgekapt op een heel woord rond 155 tekens.
+const eerste = p.tekst?.[0]?.trim();
+const vol = eerste && eerste.length <= 158 ? eerste : p.kort;
+const beschrijving = vol.length <= 158 ? vol : vol.slice(0, vol.lastIndexOf(' ', 154)).replace(/[,:;]$/, '') + '…';
+const og = await getImage({ src: p.cover, width: 1200, height: 630, fit: 'cover', format: 'jpg' });
+const schema = grafiek(
+  {
+    '@type': 'CreativeWork',
+    name: p.naam,
+    description: p.kort,
+    url: `${SITE_PERSOONLIJK}/projects/${p.slug}/`,
+    image: new URL(og.src, SITE_PERSOONLIJK).href,
+    keywords: p.tags.join(', '),
+    creator: { '@id': `${SITE_PERSOONLIJK}/#guus` },
+    ...(p.links?.[0] ? { sameAs: p.links[0].url } : {}),
+  },
+  kruimelpad(SITE_PERSOONLIJK, [{ naam: 'Guus Noij', pad: '/' }, { naam: 'Projects', pad: '/#projects' }, { naam: p.naam, pad: `/projects/${p.slug}/` }]),
+);
 ---
-<Basis modus="licht" titel={`${p.naam} · Guus Noij`} omschrijving={p.kort} nav={navPersoonlijk}>
+<Basis modus="licht" titel={`${p.naam} · Project by Guus Noij`} omschrijving={beschrijving} nav={navPersoonlijk} ogImage={og.src} ogType="article" {schema}>
   <PaginaKop icoon="🛠️" titel={p.naam} kruimels={[{ href: '/#projects', label: 'Projects' }]}>
     <p class="lead">{p.kort}</p>
   </PaginaKop>

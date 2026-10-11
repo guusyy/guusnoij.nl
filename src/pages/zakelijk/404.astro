@@ -1,0 +1,23 @@
+---
+import Basis from '../../layouts/Basis.astro';
+import Voet from '../../components/Voet.astro';
+import { ZAKELIJK } from '../../data/site';
+import { navZakelijk } from '../../data/zakelijk';
+---
+<Basis modus="donker" taal="nl" ondertitel="DESIGN & DEVELOPMENT" nav={navZakelijk}
+  titel="Pagina niet gevonden · Guus Noij Design & Development" omschrijving="Deze pagina bestaat niet (meer).">
+  <section class="niet">
+    <div class="wrap">
+      <p class="prompt mono"><span class="punt">~/gennep</span> $ cd deze-pagina<br /><span class="zacht">cd: no such file or directory</span></p>
+      <h1>Pagina niet gevonden<span class="punt">.</span></h1>
+      <p class="intro">Deze pagina bestaat niet (meer). Ga terug naar de <a href={ZAKELIJK}>homepage</a>.</p>
+    </div>
+  </section>
+  <Voet slot="voet" modus="donker" />
+</Basis>
+
+<style>
+  .niet { padding-top: 5rem; min-height: 50vh; }
+  .prompt { font-size: .9rem; color: var(--zacht); margin-bottom: 1.5rem; }
+  .intro { font-size: 1.15rem; margin-top: 1.5rem; }
+</style>

@@ -5,6 +5,7 @@ import Kop from '../components/Kop.astro';
 import Wissel from '../components/Wissel.astro';
 import Palet from '../components/Palet.astro';
 import Kat from '../components/Kat.astro';
+import { INDEXEREN, SITE_PERSOONLIJK, SITE_ZAKELIJK } from '../data/site';
 
 interface Props {
   modus: 'licht' | 'donker';
@@ -13,8 +14,20 @@ interface Props {
   taal?: string;
   nav: { href: string; label: string }[];
   ondertitel?: string;
+  /** Absolute of root-relatieve URL van de deelafbeelding (1200x630). */
+  ogImage?: string;
+  ogType?: 'website' | 'profile' | 'article';
+  /** JSON-LD (schema.org) voor deze pagina. */
+  schema?: Record<string, unknown> | Record<string, unknown>[];
 }
-const { modus, titel, omschrijving, taal = 'en', nav, ondertitel } = Astro.props;
+const { modus, titel, omschrijving, taal = 'en', nav, ondertitel, ogType = 'website', schema } = Astro.props;
+// Canonieke URL: de zakelijke pagina's staan in de build onder /zakelijk/, maar horen bij zakelijk.guusnoij.nl.
+const zakelijk = modus === 'donker';
+const basis = zakelijk ? SITE_ZAKELIJK : SITE_PERSOONLIJK;
+const pad = zakelijk ? Astro.url.pathname.replace(/^\/zakelijk/, '') || '/' : Astro.url.pathname;
+const canonical = basis + pad;
+const ogImage = new URL(Astro.props.ogImage ?? (zakelijk ? '/og/zakelijk.png' : '/og/persoonlijk.png'), basis).href;
+const siteNaam = zakelijk ? 'Guus Noij Design & Development' : 'Guus Noij';
 ---
 <!doctype html>
 <html lang={taal} data-modus={modus}>
@@ -22,11 +35,26 @@ const { modus, titel, omschrijving, taal = 'en', nav, ondertitel } = Astro.props
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>{titel}</title>
-  <!-- Nog niet in zoekmachines (okt 2026); de Worker (cloudflare/src/index.ts) stuurt ook X-Robots-Tag. Geen robots.txt-Disallow, anders zien zoekmachines de noindex niet. -->
-  <meta name="robots" content="noindex, nofollow" />
+  <!-- Zolang INDEXEREN false is: noindex (de Worker stuurt ook X-Robots-Tag). Geen robots.txt-Disallow, anders zien zoekmachines de noindex niet. -->
+  <meta name="robots" content={INDEXEREN ? 'index, follow, max-image-preview:large' : 'noindex, nofollow'} />
   <meta name="description" content={omschrijving} />
+  <meta name="author" content="Guus Noij" />
+  <link rel="canonical" href={canonical} />
+  <link rel="sitemap" href="/sitemap.xml" />
+  <meta property="og:type" content={ogType} />
+  <meta property="og:site_name" content={siteNaam} />
+  <meta property="og:locale" content={taal === 'nl' ? 'nl_NL' : 'en_GB'} />
+  <meta property="og:url" content={canonical} />
   <meta property="og:title" content={titel} />
   <meta property="og:description" content={omschrijving} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={titel} />
+  <meta name="twitter:description" content={omschrijving} />
+  <meta name="twitter:image" content={ogImage} />
+  {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
   <meta name="theme-color" content={modus === 'licht' ? '#fbfbf9' : '#0a0d12'} />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

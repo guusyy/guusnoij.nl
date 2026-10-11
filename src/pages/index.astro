@@ -9,12 +9,15 @@ import { projecten as zijprojecten } from '../data/projecten';
 import ProjectTegel from '../components/ProjectTegel.astro';
 import { EMAIL, GITHUB, ZAKELIJK } from '../data/site';
 import { navPersoonlijk as nav } from '../data/persoonlijk';
+import { grafiek, persoon, websitePersoonlijk } from '../data/schema';
 
 ---
 <Basis
   modus="licht"
-  titel="Guus Noij · front-end developer"
-  omschrijving="Front-end developer from Gennep. I like making practical and beautiful (web)software."
+  titel="Guus Noij · Front-end developer in Gennep"
+  omschrijving="Guus Noij is a senior front-end developer from Gennep (NL) with a UX background: React, TypeScript, Vue and AI agents. Projects, experience and bonsai."
+  ogType="profile"
+  schema={grafiek(persoon, websitePersoonlijk)}
   {nav}
 >
   <section class="held">

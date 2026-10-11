@@ -4,11 +4,13 @@ import Voet from '../../components/Voet.astro';
 import Cta from '../../components/zakelijk/Cta.astro';
 import { ZAKELIJK } from '../../data/site';
 import { navZakelijk, herkenbaar, maak } from '../../data/zakelijk';
+import { grafiek, bedrijf, websiteZakelijk } from '../../data/schema';
 ---
 <Basis
   modus="donker" taal="nl" ondertitel="DESIGN & DEVELOPMENT" nav={navZakelijk}
-  titel="Guus Noij Design & Development · digitaal bureau van één"
-  omschrijving="Websites, maatwerk, automatisering en beheer. De kwaliteit van een digital agency, met één vast aanspreekpunt."
+  titel="Guus Noij Design & Development · websites en maatwerk"
+  omschrijving="Websites, maatwerk, automatisering en hosting voor bedrijven. Van strategie en ontwerp tot ontwikkeling en beheer, met één vast aanspreekpunt in Gennep."
+  schema={grafiek(bedrijf, websiteZakelijk)}
 >
   <section class="held">
     <div class="wrap">

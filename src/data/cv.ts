@@ -75,7 +75,7 @@ export const skills = [
   { naam: 'CSS', tekst: 'Tailwind CSS, PostCSS, design systems' },
   { naam: 'Astro', tekst: 'static sites, like this one' },
   { naam: 'UX & visual design', tekst: 'where I started. I still design before I build' },
-  { naam: 'AI agents', tekst: "Well, that's how it started. These days my expertise is mostly about channeling AI agents." },
+  { naam: 'AI agents', tekst: "Where all of the above comes together. These days I mostly channel AI agents: they write much of the code, I bring the design eye and front-end experience to steer and review it." },
 ];
 
 export const opleiding = [

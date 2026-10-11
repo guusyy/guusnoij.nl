@@ -1,0 +1,22 @@
+---
+import Basis from '../layouts/Basis.astro';
+import Voet from '../components/Voet.astro';
+import { navPersoonlijk } from '../data/persoonlijk';
+---
+<Basis modus="licht" titel="Page not found · Guus Noij" omschrijving="This page doesn't exist (anymore)." nav={navPersoonlijk}>
+  <section class="niet">
+    <div class="wrap">
+      <p class="label">404</p>
+      <h1>This page wandered off<span class="punt">.</span></h1>
+      <p class="intro zacht">Probably one of the cats. Try the <a href="/">homepage</a>, or press <kbd>/</kbd> to search.</p>
+    </div>
+  </section>
+  <Voet slot="voet" modus="licht" />
+</Basis>
+
+<style>
+  .niet { padding-top: 5rem; min-height: 50vh; }
+  .label { margin-bottom: 1.25rem; }
+  .intro { font-size: 1.15rem; margin-top: 1.5rem; }
+  kbd { font: .85rem/1 var(--mono); border: 1px solid var(--lijn); border-bottom-width: 2px; border-radius: .3rem; padding: .15rem .4rem; }
+</style>

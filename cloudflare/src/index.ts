@@ -36,7 +36,8 @@ async function serveer(request: Request): Promise<Response> {
       }
     }
     if (res.status !== 404) return res;
-    return env.ASSETS.fetch(request);
+    const opRoot = await env.ASSETS.fetch(request);
+    return opRoot.status === 404 ? nietGevonden('/zakelijk/404/', request) : opRoot;
   }
 
   if (url.hostname === 'www.guusnoij.nl') {
@@ -55,7 +56,14 @@ async function serveer(request: Request): Promise<Response> {
     url.pathname = url.pathname.slice('/zakelijk'.length) || '/';
     return Response.redirect(url.toString(), 301);
   }
-  return env.ASSETS.fetch(request);
+  const res = await env.ASSETS.fetch(request);
+  return res.status === 404 ? nietGevonden('/404', request) : res;
+}
+
+// Eigen 404-pagina per kant, met de juiste statuscode.
+async function nietGevonden(pad: string, request: Request): Promise<Response> {
+  const pagina = await env.ASSETS.fetch(new Request(new URL(pad, request.url), request));
+  return new Response(pagina.body, { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8' } });
 }
 
 export default {

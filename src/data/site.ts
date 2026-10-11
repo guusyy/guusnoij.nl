@@ -4,6 +4,13 @@ const prod = import.meta.env.PROD && !import.meta.env.PUBLIC_RELATIEF;
 export const PERSOONLIJK = prod ? 'https://guusnoij.nl/' : '/';
 export const ZAKELIJK = prod ? 'https://zakelijk.guusnoij.nl/' : '/zakelijk/';
 
+// Vindbaarheid: zolang dit false is, krijgt elke pagina noindex. Bij aanzetten ook de X-Robots-Tag
+// in cloudflare/src/index.ts weghalen.
+export const INDEXEREN = false;
+
+export const SITE_PERSOONLIJK = 'https://guusnoij.nl';
+export const SITE_ZAKELIJK = 'https://zakelijk.guusnoij.nl';
+
 export const EMAIL = 'guus.noij@pm.me';
 // Zakelijk contactadres.
 export const EMAIL_ZAKELIJK = 'hallo@guusnoij.nl';
