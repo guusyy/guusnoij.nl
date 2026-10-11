@@ -1,0 +1,54 @@
+---
+import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import Kop from '../components/Kop.astro';
+import Wissel from '../components/Wissel.astro';
+import Palet from '../components/Palet.astro';
+import Kat from '../components/Kat.astro';
+
+interface Props {
+  modus: 'licht' | 'donker';
+  titel: string;
+  omschrijving: string;
+  taal?: string;
+  nav: { href: string; label: string }[];
+  ondertitel?: string;
+}
+const { modus, titel, omschrijving, taal = 'en', nav, ondertitel } = Astro.props;
+---
+<!doctype html>
+<html lang={taal} data-modus={modus}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{titel}</title>
+  <!-- Nog niet in zoekmachines (okt 2026); de Worker (cloudflare/src/index.ts) stuurt ook X-Robots-Tag. Geen robots.txt-Disallow, anders zien zoekmachines de noindex niet. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="description" content={omschrijving} />
+  <meta property="og:title" content={titel} />
+  <meta property="og:description" content={omschrijving} />
+  <meta name="theme-color" content={modus === 'licht' ? '#fbfbf9' : '#0a0d12'} />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <ClientRouter />
+  <script is:inline>
+    // Na een wissel tussen persoonlijk en zakelijk: inhoud zacht laten verschijnen en de ?w uit de url halen.
+    if (location.search.includes('w=1')) {
+      document.documentElement.classList.add('na-wissel');
+      history.replaceState(null, '', location.pathname + location.hash);
+    }
+  </script>
+</head>
+<body>
+  <Kop {modus} {nav} {ondertitel} taal={taal}>
+    <Wissel slot="wissel" {modus} taal={taal} />
+  </Kop>
+  <main>
+    <slot />
+  </main>
+  <slot name="voet" />
+  {modus === 'licht' && <Palet />}
+  {modus === 'licht' && <Kat />}
+  {modus === 'licht' && <script is:inline>console.log('%cHi fellow developer 👋', 'font: 700 16px monospace; color: #3b82f6', '\nCurious how this is built? Astro + a single Cloudflare Worker. Press ⌘K for a few secrets.');</script>}
+</body>
+</html>

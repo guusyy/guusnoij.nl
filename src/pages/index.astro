@@ -1,0 +1,260 @@
+---
+import { Image } from 'astro:assets';
+import Basis from '../layouts/Basis.astro';
+import Voet from '../components/Voet.astro';
+import foto from '../assets/guus.jpg';
+import { werk, projecten, skills, opleiding, naast } from '../data/cv';
+import { interesses } from '../data/leven';
+import { projecten as zijprojecten } from '../data/projecten';
+import ProjectTegel from '../components/ProjectTegel.astro';
+import { EMAIL, GITHUB, ZAKELIJK } from '../data/site';
+import { navPersoonlijk as nav } from '../data/persoonlijk';
+
+---
+<Basis
+  modus="licht"
+  titel="Guus Noij · front-end developer"
+  omschrijving="Front-end developer from Gennep. I like making practical and beautiful (web)software."
+  {nav}
+>
+  <section class="held">
+    <div class="wrap held-in">
+      <div>
+        <p class="label">Front-end developer · Gennep, NL</p>
+        <h1>Nice to meet you!<br />I'm Guus<span class="punt">.</span></h1>
+        <p class="intro">
+          A front-end developer who likes making practical and beautiful (web)software.
+        </p>
+        <div class="acties">
+          <a class="knop vol" href="#experience">Resume →</a>
+          <a class="knop" href={GITHUB}>GitHub</a>
+          <a class="knop" href={`mailto:${EMAIL}`}>Email</a>
+        </div>
+      </div>
+      <div class="foto"><Image src={foto} alt="Portrait of Guus Noij" widths={[320, 640]} sizes="(min-width: 52rem) 320px, 60vw" loading="eager" /></div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap twee">
+      <h2>About me</h2>
+      <div class="tekst">
+        <p>
+          I'm a senior front-end developer at <b>BTCDirect</b> in Nijmegen, with more than eight years of experience in the web software industry.
+          My focus is React and vanilla JavaScript/TypeScript, CSS and HTML.
+        </p>
+        <p>
+          Born in August 1996, I've always had a natural affinity for computers and the internet. That led me to study Communication &amp; Multimedia Design,
+          where I graduated in Visual Design with a focus on UX. I kickstarted my career as a UX designer at Planon Software, and along the way I saw how much a
+          well-crafted front-end shapes a great user experience. That pulled me into front-end development, and I never looked back.
+        </p>
+        <p>
+          Beyond the screen I enjoy my two cats, nature walks, my garden and the meditative art of bonsai. Family time and hanging out with friends matter a lot to me too.
+        </p>
+        <p class="zij">
+          Next to my job I run my own business, <b>Guus Noij Design &amp; Development</b>, where I help companies with their digital challenges.{' '}
+          <a href={ZAKELIJK} data-naar="donker">Have a look →</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="wrap twee">
+      <h2>Experience</h2>
+      <ol class="lijst">
+        {werk.map((w) => (
+          <li class="baan">
+            <div class="kopregel">
+              <h3>{w.rol} <span class="zacht">@ {w.bedrijf}</span></h3>
+              <span class="mono zacht klein">{w.periode}</span>
+            </div>
+            {w.tekst && <p class="zacht">{w.tekst}</p>}
+            {w.punten && <ul class="punten">{w.punten.map((p) => <li>{p}</li>)}</ul>}
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap twee">
+      <div>
+        <h2>Projects</h2>
+        <p class="zacht klein mono kant">Professional projects I worked on.</p>
+      </div>
+      <ul class="lijst">
+        {projecten.map((p) => (
+          <li>
+            {p.url ? (
+              <a class="project" href={p.url}>
+                <h3>{p.naam} <span class="pijl">↗</span></h3>
+                <p class="zacht">{p.tekst}</p>
+              </a>
+            ) : (
+              <div class="project">
+                <h3>{p.naam}</h3>
+                <p class="zacht">{p.tekst}</p>
+              </div>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div class="wrap zijproj">
+      <h3 class="groep label">Side projects <span class="zacht">· {zijprojecten.length}</span></h3>
+      <div class="kaarten">
+        {zijprojecten.map((p) => <ProjectTegel href={`/projects/${p.slug}`} cover={p.cover} naam={p.naam} kort={p.kort} tags={p.tags} vt={p.slug} />)}
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap twee">
+      <h2>Skills</h2>
+      <div>
+        <dl class="skills">
+          {skills.map((s) => (<><dt class="mono">{s.naam}</dt><dd class="zacht">{s.tekst}</dd></>))}
+        </dl>
+        <p class="label talen">Languages</p>
+        <p>Dutch <span class="zacht">(native)</span> · English <span class="zacht">(proficient)</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="elsewhere">
+    <div class="wrap twee">
+      <h2>Elsewhere</h2>
+      <div class="blokken">
+        <div>
+          <p class="label">Education</p>
+          <ul class="kaal">
+            {opleiding.map((o) => (
+              <li><b>{o.naam}</b><br /><span class="zacht">{o.waar} · {o.periode}</span>{o.tekst && <><br /><span class="zacht">{o.tekst}</span></>}</li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <p class="label">Side activities</p>
+          <ul class="kaal">
+            {naast.map((n) => <li><b>{n.rol}</b>, {n.waar}<br /><span class="zacht">{n.periode}</span></li>)}
+          </ul>
+        </div>
+        <div>
+          <p class="label">Interests</p>
+          <ul class="tags">
+            {interesses.map((i) => i.href
+              ? <li class="klik"><a href={i.href}>{i.icoon} {i.naam} <span aria-hidden="true">→</span></a></li>
+              : i.naam === 'Two cats'
+                ? <li class="klik"><button type="button" data-aai title="Pet the cats">{i.icoon} {i.naam} <span class="teller" data-teller></span></button></li>
+                : <li title={i.tekst}>{i.icoon} {i.naam}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap twee">
+      <h2>Contact</h2>
+      <div>
+        <p class="groot">Have a question, want to say hi or need some help? Don't hesitate to reach out.</p>
+        <p class="mono">
+          EMAIL: <a href={`mailto:${EMAIL}`}>{EMAIL}</a><br />
+          GITHUB: <a href={GITHUB}>@guusyy</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <Voet slot="voet" modus="licht" />
+</Basis>
+
+<script>
+  // "Two cats"-label: aait de katten rechtsonder en toont hoe vaak ze al geaaid zijn.
+  function toonTeller() {
+    const t = document.querySelector<HTMLElement>('[data-teller]');
+    if (!t) return;
+    const n = Number(localStorage.getItem('katten-geaaid') || 0);
+    t.textContent = n ? `· ${n} pets` : '· pet them';
+  }
+  document.addEventListener('astro:page-load', () => {
+    toonTeller();
+    document.querySelector('[data-aai]')?.addEventListener('click', () => document.dispatchEvent(new CustomEvent('aai-katten')));
+  });
+  document.addEventListener('katten-teller', toonTeller);
+</script>
+
+<style>
+  .held { padding-top: 4rem; }
+  .held-in { display: grid; gap: 2.5rem; align-items: center; }
+  .held .label { margin-bottom: 1.25rem; }
+  .intro { font-size: 1.2rem; max-width: 36rem; margin-top: 1.5rem; }
+  .acties { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 2rem; }
+  .foto { width: min(55vw, 320px); }
+  .foto :global(img) { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: .6rem; }
+  @media (min-width: 52rem) {
+    .held-in { grid-template-columns: 1fr auto; }
+  }
+  @media (max-width: 51.99rem) {
+    .held { padding-top: 2rem; }
+    .held-in { gap: 1.5rem; }
+    .foto { order: -1; width: 112px; }
+    .foto :global(img) { border-radius: 50%; }
+    .intro { font-size: 1.08rem; }
+    /* Side projects als veegbare rij */
+  }
+
+  .twee { display: grid; gap: 0; }
+  .twee > h2, .twee > div > h2 { margin-bottom: 1.5rem; display: flex; gap: .75rem; align-items: baseline; }
+  .twee > h2::before, .twee > div > h2::before { content: '~~~'; color: var(--blauw); font-weight: 400; letter-spacing: 0; }
+  @media (min-width: 52rem) {
+    .twee { grid-template-columns: 15rem 1fr; gap: 3rem; }
+  }
+  .tekst { max-width: 40rem; }
+  .zij { padding: 1rem 1.25rem; border-left: 3px solid var(--blauw); background: var(--vlak); }
+
+  .klein { font-size: .82rem; }
+  .kant { margin-top: -.75rem; }
+  .baan h3 { font-family: var(--sans); font-weight: 600; font-size: 1.05rem; }
+  .kopregel { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem 1rem; align-items: baseline; }
+  .baan p { margin: .5rem 0 0; }
+  .punten { margin: .5rem 0 0; padding-left: 1.1rem; color: var(--zacht); }
+  .punten li::marker { content: '– '; }
+
+  .project { display: block; text-decoration: none; color: inherit; }
+  .project h3 { color: var(--tekst); font-family: var(--sans); font-weight: 600; }
+  .project p { margin: .35rem 0 0; }
+  .pijl { color: var(--blauw); display: inline-block; transition: transform .2s; }
+  .project:hover h3 { color: var(--link); }
+  .project:hover .pijl { transform: translate(2px, -2px); }
+
+  .skills { display: grid; grid-template-columns: max-content 1fr; gap: .6rem 1.5rem; margin: 0; }
+  .skills dt { font-weight: 500; }
+  .skills dd { margin: 0; }
+  .talen { margin: 2rem 0 .5rem; }
+
+  .blokken { display: grid; gap: 2rem; }
+  @media (min-width: 40rem) { .blokken { grid-template-columns: 1fr 1fr; } .blokken > :last-child { grid-column: 1 / -1; } }
+  .blokken .label { margin-bottom: .9rem; }
+  .kaal { list-style: none; padding: 0; margin: 0; display: grid; gap: .9rem; }
+  .zijproj { margin-top: 3.5rem; }
+  .groep { margin: 0 0 1rem; }
+  .kaarten { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); }
+  .tags { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+  .tags li { font: .85rem/1 var(--mono); padding: .5rem .7rem; border: 1px solid var(--lijn); border-radius: 999px; }
+  .tags li.klik { padding: 0; border-color: var(--blauw); }
+  .tags li.klik a, .tags li.klik button { display: block; padding: .5rem .7rem; color: var(--tekst); text-decoration: none; font: inherit; background: none; border: 0; cursor: pointer; }
+  .tags .teller { color: var(--zacht); }
+  .tags li.klik:hover { background: var(--vlak); }
+
+  .groot { font-size: 1.25rem; max-width: 34rem; }
+  @media (max-width: 51.99rem) {
+    /* Projecttegels als veegbare carrousel */
+    .kaarten { grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: 82%; overflow-x: auto; scroll-snap-type: x mandatory; margin: 0 -1.5rem; padding: 0 1.5rem .75rem; scroll-padding: 0 1.5rem; scrollbar-width: none; }
+    .kaarten::-webkit-scrollbar { display: none; }
+    .kaarten > :global(*) { scroll-snap-align: start; }
+    .skills { grid-template-columns: 1fr; gap: 0; }
+    .skills dd { margin: .15rem 0 1rem; }
+  }
+</style>

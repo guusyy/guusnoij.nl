@@ -1,0 +1,160 @@
+---
+import Basis from '../../layouts/Basis.astro';
+import Voet from '../../components/Voet.astro';
+import { navZakelijk as nav } from '../../data/zakelijk';
+
+// Tekst = afspraken/algemene-voorwaarden-2026-10.pdf uit de administratie-repo (tool/av-sjabloon.html).
+// Wijzigt de AV daar, pas dan ook deze pagina en de versie aan.
+const versie = '2026-10';
+---
+<Basis
+  modus="donker"
+  taal="nl"
+  titel="Algemene voorwaarden · Guus Noij Design & Development"
+  omschrijving="De algemene voorwaarden van Guus Noij Design & Development voor websites, hosting, e-mail en beheer."
+  ondertitel="DESIGN & DEVELOPMENT"
+  {nav}
+>
+  <section class="kop-av">
+    <div class="wrap">
+      <p class="label">Versie {versie} · KvK 70537372</p>
+      <h1>Algemene voorwaarden<span class="punt">.</span></h1>
+      <p class="intro zacht">
+        Deze voorwaarden gelden voor al mijn offertes, afspraken en diensten aan zakelijke opdrachtgevers.
+        Kort gezegd: duidelijke afspraken, eerlijke prijzen en heldere verantwoordelijkheden.
+      </p>
+      <a class="knop" href="/algemene-voorwaarden.pdf" download>Download als PDF ↓</a>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap av">
+      <nav class="inhoud" aria-label="Inhoud">
+        <p class="label">Inhoud</p>
+        <ol>
+          <li><a href="#artikel-1">Toepasselijkheid</a></li>
+          <li><a href="#artikel-2">Afspraken en uitvoering</a></li>
+          <li><a href="#artikel-3">Hosting, e-mail en beheer</a></li>
+          <li><a href="#artikel-4">Prijzen en prijsaanpassing</a></li>
+          <li><a href="#artikel-5">Facturering en betaling</a></li>
+          <li><a href="#artikel-6">Duur en opzegging</a></li>
+          <li><a href="#artikel-7">Aansprakelijkheid</a></li>
+          <li><a href="#artikel-8">Overmacht</a></li>
+          <li><a href="#artikel-9">Intellectueel eigendom</a></li>
+          <li><a href="#artikel-10">Vrijwaring</a></li>
+          <li><a href="#artikel-11">Geheimhouding en privacy</a></li>
+          <li><a href="#artikel-12">Toepasselijk recht</a></li>
+        </ol>
+      </nav>
+      <article class="tekst">
+      <h2 id="artikel-1"><span class="nr">1.</span> Toepasselijkheid</h2>
+      <ol>
+        <li>Deze voorwaarden gelden voor alle offertes, afspraken en diensten van Guus Noij Design &amp; Development ("Opdrachtnemer") aan zakelijke opdrachtgevers ("Opdrachtgever").</li>
+        <li>Afwijkingen gelden alleen als partijen die schriftelijk (ook per e-mail) hebben afgesproken. Voorwaarden van Opdrachtgever zijn niet van toepassing.</li>
+      </ol>
+      
+      <h2 id="artikel-2"><span class="nr">2.</span> Afspraken en uitvoering</h2>
+      <ol>
+        <li>Een opdracht komt tot stand zodra Opdrachtgever een offerte of voorstel schriftelijk (ook per e-mail) accepteert, of zodra Opdrachtnemer met de uitvoering begint.</li>
+        <li>Opdrachtnemer voert opdrachten naar beste kunnen en vakkundig uit. Het gaat om een inspanningsverplichting, geen resultaatsverplichting, tenzij uitdrukkelijk anders afgesproken.</li>
+        <li>Opdrachtgever zorgt tijdig voor de informatie, toegang en materialen die nodig zijn. Vertraging door het ontbreken daarvan komt voor rekening van Opdrachtgever.</li>
+        <li>Werk dat buiten de afgesproken opdracht valt, wordt na overleg uitgevoerd tegen het uurtarief dat in de offerte of het voorstel staat, of bij gebrek daaraan het op dat moment geldende uurtarief van Opdrachtnemer.</li>
+        <li>Een project geldt als opgeleverd en geaccepteerd als Opdrachtgever niet binnen 14 dagen na oplevering schriftelijk en concreet meldt wat er niet aan de afspraken voldoet, of zodra Opdrachtgever het opgeleverde in gebruik neemt. Kleine punten die het gebruik niet in de weg staan, houden de acceptatie niet tegen.</li>
+      </ol>
+      
+      <h2 id="artikel-3"><span class="nr">3.</span> Hosting, e-mail en beheer</h2>
+      <ol>
+        <li>Hosting, e-mail en domeinregistratie worden geleverd via een professionele hostingpartij binnen de EU. Opdrachtnemer is niet aansprakelijk voor storingen, onderhoud of tekortkomingen van die partij, maar zet zich in om problemen zo snel mogelijk op te lossen.</li>
+        <li>Opdrachtnemer streeft naar een reactie op beheerverzoeken binnen twee werkdagen. Er geldt geen 24/7-bereikbaarheid en geen gegarandeerde beschikbaarheid (SLA), tenzij schriftelijk afgesproken.</li>
+        <li>Back-ups worden gemaakt door de hostingpartij en circa 60 dagen bewaard. Opdrachtnemer kan bestanden, databases en mailboxen uit die periode terugzetten, maar garandeert niet dat alle gegevens altijd volledig te herstellen zijn.</li>
+        <li>Opdrachtgever is verantwoordelijk voor de inhoud die via de diensten wordt opgeslagen of verstuurd, voor sterke wachtwoorden en voor zorgvuldig gebruik door de eigen medewerkers. Opdrachtgever houdt zich aan de gebruiksregels (fair use policy) van de hostingpartij.</li>
+        <li>Bij misbruik, een (vermoedelijk) gehackt account, het versturen van spam of een ander beveiligingsrisico mag Opdrachtnemer direct, zo nodig zonder voorafgaande waarschuwing, maatregelen nemen, zoals het blokkeren van een mailbox, het wijzigen van wachtwoorden of het tijdelijk buiten werking stellen van een dienst. Opdrachtnemer informeert Opdrachtgever daar zo snel mogelijk over. Kosten die door het misbruik ontstaan, waaronder herstelwerk en kosten of maatregelen van de hostingpartij, zijn voor rekening van Opdrachtgever als het misbruik in zijn risicosfeer ligt.</li>
+        <li>Domeinnamen worden op naam van of ten behoeve van Opdrachtgever geregistreerd. Bij beëindiging werkt Opdrachtnemer mee aan de verhuizing van de domeinnaam, mits alle facturen zijn betaald.</li>
+      </ol>
+      
+      <h2 id="artikel-4"><span class="nr">4.</span> Prijzen en prijsaanpassing</h2>
+      <ol>
+        <li>Opdrachtnemer maakt gebruik van de kleineondernemersregeling (KOR); er wordt geen btw in rekening gebracht. Wijzigt dit, dan worden prijzen vanaf dat moment vermeerderd met btw.</li>
+        <li>Tarieven voor doorlopende diensten kunnen jaarlijks per verlengingsdatum worden aangepast aan de inflatie (CBS-consumentenprijsindex) en aan gestegen kosten van de hostingpartij. Een aanpassing wordt minimaal één maand vooraf gemeld. Bij een verhoging van meer dan 10% mag Opdrachtgever de dienst per de verlengingsdatum opzeggen.</li>
+      </ol>
+      
+      <h2 id="artikel-5"><span class="nr">5.</span> Facturering en betaling</h2>
+      <ol>
+        <li>Doorlopende diensten (hosting, e-mail, beheer, domeinnamen) worden per jaar vooraf gefactureerd. Projecten worden gefactureerd zoals afgesproken, bij gebrek aan afspraak na oplevering.</li>
+        <li>Betaling binnen 14 dagen na factuurdatum. Na het verstrijken van die termijn is Opdrachtgever zonder ingebrekestelling in verzuim en is de wettelijke handelsrente verschuldigd, plus redelijke incassokosten.</li>
+        <li>Bij betalingsachterstand van meer dan 30 dagen mag Opdrachtnemer, na een schriftelijke waarschuwing, de dienstverlening opschorten tot volledige betaling.</li>
+      </ol>
+      
+      <h2 id="artikel-6"><span class="nr">6.</span> Duur en opzegging</h2>
+      <ol>
+        <li>Doorlopende diensten worden aangegaan voor één jaar en daarna steeds stilzwijgend met één jaar verlengd.</li>
+        <li>Opzeggen kan schriftelijk (ook per e-mail) tot uiterlijk één maand vóór de verlengingsdatum. Vooruitbetaalde bedragen worden bij tussentijdse beëindiging niet terugbetaald, tenzij de beëindiging aan Opdrachtnemer te wijten is.</li>
+        <li>Na beëindiging heeft Opdrachtgever 30 dagen om gegevens op te halen of te laten verhuizen. Daarna worden de gegevens verwijderd.</li>
+      </ol>
+      
+      <h2 id="artikel-7"><span class="nr">7.</span> Aansprakelijkheid</h2>
+      <ol>
+        <li>De aansprakelijkheid van Opdrachtnemer is beperkt tot directe schade en tot ten hoogste het bedrag dat Opdrachtgever in de twaalf maanden voor het schadeveroorzakende voorval voor de betreffende dienst of opdracht heeft betaald.</li>
+        <li>Opdrachtnemer is niet aansprakelijk voor indirecte schade, gevolgschade, gederfde winst, gemiste besparingen of verlies van gegevens.</li>
+        <li>Deze beperkingen gelden niet bij opzet of bewuste roekeloosheid van Opdrachtnemer.</li>
+        <li>Een vordering vervalt als die niet binnen twaalf maanden nadat Opdrachtgever de schade kende of had moeten kennen, schriftelijk is gemeld.</li>
+      </ol>
+      
+      <h2 id="artikel-8"><span class="nr">8.</span> Overmacht</h2>
+      <ol>
+        <li>Opdrachtnemer is niet gehouden tot nakoming bij overmacht, waaronder storingen bij hosting-, internet- of energieleveranciers, cyberaanvallen, ziekte en andere omstandigheden buiten de redelijke invloed van Opdrachtnemer.</li>
+        <li>Duurt de overmacht langer dan 60 dagen, dan mogen beide partijen de betreffende opdracht of dienst schriftelijk beëindigen, zonder dat er een schadevergoeding verschuldigd is. Wat al geleverd is, wordt naar verhouding betaald.</li>
+      </ol>
+      
+      <h2 id="artikel-9"><span class="nr">9.</span> Intellectueel eigendom</h2>
+      <ol>
+        <li>Na volledige betaling gaan de intellectuele eigendomsrechten op de websites, ontwerpen en teksten die Opdrachtnemer speciaal voor Opdrachtgever heeft gemaakt, over op Opdrachtgever.</li>
+        <li>Voor materiaal van derden, zoals lettertypen, plugins, thema's, software en beeldmateriaal, gelden de licentievoorwaarden van die derden. Eventuele licentiekosten zijn voor Opdrachtgever, tenzij anders afgesproken.</li>
+        <li>Opdrachtnemer behoudt de rechten op eigen werkwijzen en op algemeen herbruikbare code en componenten. Voor zover die in het opgeleverde werk zitten, krijgt Opdrachtgever daarop een blijvend gebruiksrecht, zodat hij het werk zonder beperkingen kan gebruiken en laten aanpassen. Opdrachtnemer mag het werk (zonder vertrouwelijke gegevens) noemen in zijn portfolio, tenzij anders afgesproken.</li>
+      </ol>
+      
+      <h2 id="artikel-10"><span class="nr">10.</span> Vrijwaring</h2>
+      <p>Opdrachtgever vrijwaart Opdrachtnemer voor aanspraken van derden, waaronder de hostingpartij, betrokkenen en toezichthouders, die voortkomen uit de inhoud die Opdrachtgever via de diensten opslaat, verstuurt of laat publiceren, uit materiaal dat Opdrachtgever aanlevert, uit gebruik van de diensten in strijd met deze voorwaarden of de wet, of uit instructies van Opdrachtgever. Opdrachtgever vergoedt de redelijke kosten van verweer.</p>
+      
+      <h2 id="artikel-11"><span class="nr">11.</span> Geheimhouding en privacy</h2>
+      <ol>
+        <li>Beide partijen houden vertrouwelijke informatie van de ander geheim.</li>
+        <li>Voor zover Opdrachtnemer persoonsgegevens verwerkt namens Opdrachtgever, gelden de afspraken in de verwerkersovereenkomst tussen partijen.</li>
+      </ol>
+      
+      <h2 id="artikel-12"><span class="nr">12.</span> Toepasselijk recht</h2>
+      <p>Op alle afspraken is Nederlands recht van toepassing. Geschillen worden voorgelegd aan de bevoegde rechter in het arrondissement Limburg, tenzij de wet anders bepaalt.</p>
+        <p class="zacht slot">Guus Noij Design &amp; Development · Hoekweg 63, 6591 XN Gennep · KvK 70537372 · versie {versie}</p>
+      </article>
+    </div>
+  </section>
+
+  <Voet slot="voet" modus="donker" />
+</Basis>
+
+<style>
+  .kop-av { padding-top: 5rem; }
+  .kop-av .label { margin-bottom: 1.25rem; }
+  h1 { font-size: clamp(2rem, 5vw, 3.2rem); }
+  .intro { max-width: 38rem; margin: 1.5rem 0 2rem; font-size: 1.1rem; }
+
+  .av { display: grid; gap: 3rem; }
+  @media (min-width: 60rem) { .av { grid-template-columns: 15rem 1fr; } }
+  .inhoud { font: .85rem/1.6 var(--mono); }
+  .inhoud .label { margin-bottom: 1rem; }
+  .inhoud ol { margin: 0; padding-left: 2.1rem; color: var(--zacht); }
+  .inhoud li { margin-bottom: .35rem; }
+  .inhoud a { color: var(--zacht); text-decoration: none; }
+  .inhoud a:hover { color: var(--tekst); }
+  @media (min-width: 60rem) { .inhoud { position: sticky; top: 2rem; align-self: start; } }
+
+  .tekst { max-width: 44rem; }
+  .tekst :global(h2) { font-size: 1rem; text-transform: none; letter-spacing: 0; margin: 2.5rem 0 1rem; padding-top: 1.25rem; border-top: 1px solid var(--lijn); scroll-margin-top: 1.5rem; }
+  .tekst :global(h2:first-child) { margin-top: 0; }
+  .tekst :global(h2 .nr) { color: var(--blauw); }
+  .tekst :global(ol) { margin: 0; padding-left: 1.4rem; color: #c9d1d9; }
+  .tekst :global(li) { margin-bottom: .6rem; padding-left: .25rem; }
+  .tekst :global(li::marker) { color: var(--zacht); font: .85em var(--mono); }
+  .tekst :global(p) { color: #c9d1d9; }
+  .slot { margin-top: 3rem; font: .8rem/1.6 var(--mono); }
+</style>

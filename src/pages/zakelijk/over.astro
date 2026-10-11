@@ -1,0 +1,43 @@
+---
+import { Image } from 'astro:assets';
+import Basis from '../../layouts/Basis.astro';
+import Voet from '../../components/Voet.astro';
+import Kop from '../../components/zakelijk/Kop.astro';
+import Cta from '../../components/zakelijk/Cta.astro';
+import foto from '../../assets/guus.jpg';
+import { PERSOONLIJK } from '../../data/site';
+import { navZakelijk } from '../../data/zakelijk';
+---
+<Basis modus="donker" taal="nl" ondertitel="DESIGN & DEVELOPMENT" nav={navZakelijk}
+  titel="Over Guus · Guus Noij Design & Development"
+  omschrijving="Guus Noij: ruim acht jaar ervaring met websites en webapplicaties, met een achtergrond in UX-design.">
+  <Kop label="Over" titel="Hoi, ik ben Guus" vt="over" />
+
+  <section class="eerst">
+    <div class="wrap over">
+      <div class="tekst">
+        <p class="groot">
+          Al ruim acht jaar ontwerp en bouw ik websites en webapplicaties, van grote platformen tot slimme maatwerktools.
+          Begonnen als UX-designer, denk ik altijd eerst aan de mensen die het gaan gebruiken.
+        </p>
+        <p class="groot">
+          Met Guus Noij Design &amp; Development help ik bedrijven met hun digitale vraagstukken. Met de aanpak van een bureau, de korte lijnen
+          van één persoon en de nieuwste technieken om het simpel op te lossen.
+        </p>
+        <p><a href={PERSOONLIJK} data-naar="licht">Meer over mij als persoon →</a></p>
+      </div>
+      <div class="foto"><Image src={foto} alt="Guus Noij" widths={[320, 640]} sizes="320px" /></div>
+    </div>
+  </section>
+
+  <Cta titel="Even kennismaken?" />
+  <Voet slot="voet" modus="donker" />
+</Basis>
+
+<style>
+  .eerst { padding-top: 2.5rem; }
+  .over { display: grid; gap: 2.5rem; }
+  @media (min-width: 52rem) { .over { grid-template-columns: 1fr 300px; gap: 4rem; align-items: start; } }
+  .tekst { max-width: 42rem; }
+  .foto :global(img) { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: .8rem; filter: grayscale(.25) contrast(1.05); }
+</style>

@@ -1,0 +1,22 @@
+---
+// Kop van een persoonlijke subpagina, zoals een Notion-pagina: kruimelpad, groot icoon en titel.
+// `vt` koppelt de kop aan de tegel op de homepage, zodat die bij het klikken in elkaar overvloeien.
+interface Props { icoon: string; titel: string; kruimels?: { href: string; label: string }[]; vt?: string }
+const { icoon, titel, kruimels = [], vt } = Astro.props;
+---
+<header class="wrap pk">
+  <nav class="kruimels" aria-label="Breadcrumb">
+    <a href="/">Guus Noij</a>
+    {kruimels.map((k) => (<><span aria-hidden="true">/</span><a href={k.href}>{k.label}</a></>))}
+    <span aria-hidden="true">/</span><span>{titel}</span>
+  </nav>
+  <span class="pagina-icoon" style={vt ? `view-transition-name: icoon-${vt}` : undefined}>{icoon}</span>
+  <h1 style={vt ? `view-transition-name: titel-${vt}` : undefined}>{titel}</h1>
+  <slot />
+</header>
+
+<style>
+  .pk { padding-top: 3.5rem; }
+  h1 { font-size: clamp(2rem, 5vw, 3rem); width: fit-content; }
+  .pk :global(.lead) { font-size: 1.2rem; max-width: 40rem; margin-top: 1.25rem; color: var(--zacht); }
+</style>

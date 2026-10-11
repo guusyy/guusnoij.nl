@@ -1,0 +1,77 @@
+---
+// Guus' twee katten (wit met tabby) die rechtsonder over de rand gluren. Aaien kan (klik of via het palet).
+// Links: donkere tabby-kap over oren en ogen met een witte bles. Rechts: vooral wit, lichte tabby-vlekken op de oren.
+const hoofd = (cx: number) =>
+  `M${cx - 32} 72 C${cx - 34} 50 ${cx - 30} 36 ${cx - 26} 30 L${cx - 24} 6 L${cx - 8} 22 Q${cx} 20 ${cx + 8} 22 L${cx + 24} 6 L${cx + 26} 30 C${cx + 30} 36 ${cx + 34} 50 ${cx + 32} 72 Z`;
+const kap = (cx: number) =>
+  `M${cx - 26} 30 L${cx - 24} 6 L${cx - 8} 22 Q${cx} 20 ${cx + 8} 22 L${cx + 24} 6 L${cx + 26} 30 C${cx + 29} 36 ${cx + 30} 44 ${cx + 29} 50 L${cx + 7} 47 L${cx} 31 L${cx - 7} 47 L${cx - 29} 50 C${cx - 30} 44 ${cx - 29} 36 ${cx - 26} 30 Z`;
+const vlek = (cx: number, k: 1 | -1) =>
+  `M${cx + k * 26} 30 L${cx + k * 24} 6 L${cx + k * 8} 22 Q${cx + k * 4} 21 ${cx + k * 3} 21 L${cx + k * 9} 33 L${cx + k * 20} 37 Z`;
+const oor = (cx: number, k: 1 | -1) => `M${cx + k * 22} 12 L${cx + k * 12} 22 L${cx + k * 24} 26 Z`;
+const ogen = (cx: number, y: number) => [cx - 12, cx + 12].map((x) => ({ x, y }));
+const A = 40, B = 108;
+---
+<button class="katten" type="button" aria-label="Pet the cats" transition:persist="katten">
+  <svg viewBox="0 0 148 76" aria-hidden="true">
+    <g class="kat">
+      <path class="vacht" d={hoofd(A)} />
+      <path class="tabby donker" d={kap(A)} />
+      <path class="streep" d={`M${A - 5} 24 l1.5 6 M${A + 5} 24 l-1.5 6 M${A} 22 v6 M${A - 18} 30 l5 3 M${A + 18} 30 l-5 3`} />
+      <path class="oor" d={oor(A, -1)} /><path class="oor" d={oor(A, 1)} />
+      {ogen(A, 41).map((o) => <g class="oog"><ellipse cx={o.x} cy={o.y} rx="4" ry="3.2" class="iris" /><ellipse cx={o.x} cy={o.y} rx="1.1" ry="2.8" class="pupil" /></g>)}
+      <path class="neus" d={`M${A - 3} 53 h6 l-3 3.2 Z`} />
+      <path class="mond" d={`M${A} 56 q-3 3 -6 1 M${A} 56 q3 3 6 1`} />
+      <ellipse class="poot" cx={A - 13} cy="72" rx="8" ry="5" /><ellipse class="poot" cx={A + 13} cy="72" rx="8" ry="5" />
+    </g>
+    <g class="kat k2">
+      <path class="vacht" d={hoofd(B)} />
+      <path class="tabby licht" d={vlek(B, -1)} /><path class="tabby licht" d={vlek(B, 1)} />
+      <path class="streep" d={`M${B - 19} 18 l3 4 M${B + 19} 18 l-3 4`} />
+      <path class="oor" d={oor(B, -1)} /><path class="oor" d={oor(B, 1)} />
+      {ogen(B, 42).map((o) => <g class="oog"><ellipse cx={o.x} cy={o.y} rx="4" ry="3.2" class="iris" /><ellipse cx={o.x} cy={o.y} rx="1.1" ry="2.8" class="pupil" /></g>)}
+      <path class="neus" d={`M${B - 3} 54 h6 l-3 3.2 Z`} />
+      <path class="mond" d={`M${B} 57 q-3 3 -6 1 M${B} 57 q3 3 6 1`} />
+    </g>
+  </svg>
+  <span class="ballon" aria-live="polite"></span>
+</button>
+
+<script>
+  const knop = document.querySelector<HTMLButtonElement>('.katten')!;
+  const ballon = knop.querySelector<HTMLElement>('.ballon')!;
+  const zinnen = ['purr…', 'mrrp?', 'more.', '*slow blink*', 'feed us instead', 'purrrrr'];
+  let timer: number;
+  function aai() {
+    const n = Number(localStorage.getItem('katten-geaaid') || 0) + 1;
+    localStorage.setItem('katten-geaaid', String(n));
+    document.dispatchEvent(new CustomEvent('katten-teller'));
+    ballon.textContent = n === 1 ? 'purr… (first pet!)' : n % 10 === 0 ? `${n} pets. They own you now.` : zinnen[n % zinnen.length];
+    knop.classList.remove('blij'); void knop.offsetWidth; knop.classList.add('blij');
+    clearTimeout(timer); timer = window.setTimeout(() => knop.classList.remove('blij'), 2200);
+  }
+  knop.addEventListener('click', aai);
+  document.addEventListener('aai-katten', aai);
+</script>
+
+<style>
+  .katten { position: fixed; right: 1.25rem; bottom: -18px; width: 118px; padding: 0; border: 0; background: none; cursor: pointer; z-index: 20; transition: transform .35s cubic-bezier(.3,1.6,.5,1); }
+  .katten:hover, .katten.blij { transform: translateY(-12px); }
+  svg { display: block; width: 100%; overflow: visible; filter: drop-shadow(0 4px 10px rgba(31, 35, 40, .12)); }
+  .vacht, .poot { fill: #fdfcf8; stroke: #2b2a28; stroke-width: 1.6; stroke-linejoin: round; }
+  .tabby.donker { fill: #57524c; }
+  .tabby.licht { fill: #9a8a79; }
+  .streep { fill: none; stroke: #2a2724; stroke-width: 1.6; stroke-linecap: round; opacity: .75; }
+  .oor { fill: #e7b3b3; opacity: .7; }
+  .iris { fill: #c7c26a; }
+  .pupil { fill: #1d1c1a; }
+  .oog { transform-box: fill-box; transform-origin: center; animation: knipper 5s infinite; }
+  .k2 .oog { animation-delay: 1.3s; }
+  .neus { fill: #e79aa6; }
+  .mond { fill: none; stroke: #2b2a28; stroke-width: 1.2; stroke-linecap: round; }
+  @keyframes knipper { 0%, 94%, 100% { transform: scaleY(1); } 97% { transform: scaleY(.1); } }
+  .blij .oog { animation: none; transform: scaleY(.3); }
+  .ballon { position: absolute; right: 72%; bottom: 74px; white-space: nowrap; font: .75rem/1 var(--mono); background: var(--tekst); color: var(--bg); padding: .45rem .6rem; border-radius: .5rem .5rem 0 .5rem; opacity: 0; transform: translateY(6px); transition: opacity .2s, transform .2s; pointer-events: none; }
+  .blij .ballon { opacity: 1; transform: none; }
+  @media (max-width: 40rem) { .katten { width: 74px; right: .5rem; bottom: -12px; } .ballon { bottom: 50px; } }
+  @media print { .katten { display: none; } }
+</style>

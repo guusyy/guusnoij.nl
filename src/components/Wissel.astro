@@ -1,0 +1,100 @@
+---
+// Schakelaar tussen de persoonlijke (licht) en zakelijke (donker) kant. Bij een klik loopt
+// de andere kleur als cirkel over het scherm en opent daarna de andere site, die al in die kleur start.
+import { PERSOONLIJK, ZAKELIJK } from '../data/site';
+
+interface Props { modus: 'licht' | 'donker'; taal: string }
+const { modus, taal } = Astro.props;
+const nl = taal === 'nl';
+const labels = nl ? ['persoonlijk', 'zakelijk'] : ['personal', 'business'];
+---
+<div class="wissel" role="group" aria-label={nl ? 'Kies site' : 'Choose site'}>
+  <a href={PERSOONLIJK} data-naar="licht" aria-current={modus === 'licht' ? 'page' : undefined}>{labels[0]}</a>
+  <a href={ZAKELIJK} data-naar="donker" aria-current={modus === 'donker' ? 'page' : undefined}>{labels[1]}</a>
+  <span class="schuif" aria-hidden="true"></span>
+</div>
+
+<script>
+  const KLEUR = { licht: '#fbfbf9', donker: '#0a0d12' };
+  // Gedelegeerd: werkt ook voor links die de ClientRouter later in de pagina zet.
+  document.addEventListener('click', (e) => {
+    const a = (e.target as Element).closest<HTMLAnchorElement>('a[data-naar]');
+    if (!a) return;
+    {
+      if (a.getAttribute('aria-current') === 'page') return e.preventDefault();
+      if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+      e.preventDefault();
+      const doel = new URL(a.href);
+      doel.searchParams.set('w', '1');
+      const html = document.documentElement;
+      html.dataset.wissel = a.dataset.naar;  // schuifje alvast verplaatsen
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return void (location.href = doel.href);
+
+      const r = a.getBoundingClientRect();
+      const x = r.left + r.width / 2, y = r.top + r.height / 2;
+      const straal = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      const laag = document.createElement('div');
+      laag.className = 'wissel-laag';
+      laag.style.cssText = `position:fixed;inset:0;z-index:99;pointer-events:none;background:${KLEUR[a.dataset.naar as 'licht' | 'donker']}`;
+      document.body.append(laag);
+      laag.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${straal}px at ${x}px ${y}px)`] },
+        { duration: 650, easing: 'cubic-bezier(.65,0,.35,1)', fill: 'forwards' },
+      ).finished.then(() => (location.href = doel.href));
+    }
+  }, true);
+  // Terug via de browser (bfcache): overgangslaag weer weghalen.
+  // Ook bij terug binnen dezelfde site (ClientRouter) of na een gewone herlaad: laag nooit laten staan.
+  document.addEventListener('astro:page-load', () => { document.querySelectorAll('.wissel-laag').forEach((d) => d.remove()); delete document.documentElement.dataset.wissel; });
+  addEventListener('pageshow', (e) => {
+    if (!e.persisted) return;
+    document.querySelectorAll('.wissel-laag').forEach((d) => d.remove());
+    delete document.documentElement.dataset.wissel;
+  });
+</script>
+
+<style>
+  .wissel {
+    position: relative;
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 3px;
+    border: 1px solid var(--lijn);
+    border-radius: 999px;
+    font: 500 .72rem/1 var(--mono);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    justify-self: end;
+  }
+  a {
+    position: relative;
+    z-index: 1;
+    padding: .55rem .85rem;
+    text-align: center;
+    text-decoration: none;
+    color: var(--zacht);
+    border-radius: 999px;
+    transition: color .3s;
+  }
+  a:hover { color: var(--tekst); }
+  @media (max-width: 30rem) {
+    .wissel { letter-spacing: .03em; font-size: .6rem; padding: 2px; }
+    a { padding: .5rem .5rem; }
+    .schuif { top: 2px; bottom: 2px; left: 2px; width: calc(50% - 2px); }
+  }
+  a[aria-current='page'] { color: var(--bg); }
+  .schuif {
+    position: absolute;
+    top: 3px; bottom: 3px; left: 3px;
+    width: calc(50% - 3px);
+    border-radius: 999px;
+    background: var(--tekst);
+    transition: transform .45s cubic-bezier(.65,0,.35,1);
+  }
+  :global([data-modus='donker']) .schuif { transform: translateX(100%); }
+  :global([data-wissel='licht']) .schuif { transform: none; }
+  :global([data-wissel='donker']) .schuif { transform: translateX(100%); }
+  :global([data-wissel]) a[aria-current='page'] { color: var(--zacht); }
+  :global([data-wissel='licht']) a[data-naar='licht'],
+  :global([data-wissel='donker']) a[data-naar='donker'] { color: var(--bg); }
+</style>

@@ -1,0 +1,38 @@
+---
+import { Image } from 'astro:assets';
+import Basis from '../../layouts/Basis.astro';
+import Voet from '../../components/Voet.astro';
+import PaginaKop from '../../components/PaginaKop.astro';
+import { navPersoonlijk } from '../../data/persoonlijk';
+import { bonsais } from '../../data/leven';
+---
+<Basis modus="licht" titel="Bonsai · Guus Noij" omschrijving="Guus Noij's small bonsai collection." nav={navPersoonlijk}>
+  <PaginaKop icoon="🌳" titel="Bonsai" kruimels={[{ href: '/#elsewhere', label: 'Interests' }]}>
+    <p class="lead">
+      I try to maintain and keep alive some bonsai trees. Bonsai takes a lot of patience and doing nothing, and that is why I like it so much.
+      I'm absolutely no professional: I mostly bought (pre-)bonsai and try to maintain them and keep them in shape. My love for the art of
+      bonsai came through the YouTube channel of{' '}<a href="https://www.youtube.com/@HeronsBonsai">Herons Bonsai</a>.
+    </p>
+  </PaginaKop>
+
+  <section class="eerst">
+    <div class="wrap galerij">
+      {bonsais.map((b) => (
+        <figure>
+          <Image src={b.foto} alt={`${b.naam} bonsai`} widths={[400, 800]} sizes="(min-width: 52rem) 360px, 50vw" />
+          <figcaption><b class="mono">{b.naam}</b>{b.notitie && <span class="zacht"> · {b.notitie}</span>}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <Voet slot="voet" modus="licht" />
+</Basis>
+
+<style>
+  .eerst { padding-top: 2.5rem; }
+  .galerij { columns: 2 16rem; column-gap: 1rem; }
+  figure { margin: 0 0 1.25rem; break-inside: avoid; }
+  figure :global(img) { width: 100%; height: auto; display: block; border-radius: .6rem; }
+  figcaption { margin-top: .5rem; font-size: .88rem; }
+</style>

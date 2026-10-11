@@ -1,0 +1,30 @@
+---
+// Eén projecttegel, gelijk voor professioneel werk en side projects. Zonder screenshot een rustig vlak met de naam.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+interface Props { href?: string; extern?: boolean; cover?: ImageMetadata; naam: string; kort: string; tags: string[]; vt?: string }
+const { href, extern, cover, naam, kort, tags, vt } = Astro.props;
+const Tag = href ? 'a' : 'div';
+---
+<Tag class="kaart" href={href} target={extern ? '_blank' : undefined} rel={extern ? 'noopener' : undefined}>
+  {cover
+    ? <Image src={cover} alt={`Screenshot of ${naam}`} widths={[400, 800]} sizes="(min-width: 68rem) 340px, (min-width: 52rem) 50vw, 82vw" style={vt ? `view-transition-name: cover-${vt}` : undefined} />
+    : <span class="leeg mono" aria-hidden="true">{naam}</span>}
+  <span class="kaart-tekst">
+    <b class="mono">{naam}{extern && <span class="pijl"> ↗</span>}</b>
+    <span class="zacht">{kort}</span>
+    <span class="tags-klein mono">{tags.join(' · ')}</span>
+  </span>
+</Tag>
+
+<style>
+  .kaart { display: flex; flex-direction: column; border: 1px solid var(--lijn); border-radius: .8rem; overflow: hidden; background: var(--vlak); color: var(--tekst); text-decoration: none; transition: border-color .2s, transform .25s cubic-bezier(.3,1.4,.5,1); }
+  a.kaart:hover { border-color: var(--blauw); transform: translateY(-3px); }
+  .kaart :global(img), .leeg { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; object-position: top; border-bottom: 1px solid var(--lijn); }
+  .leeg { display: grid; place-items: center; padding: 1rem; text-align: center; font-size: 1.1rem; font-weight: 700; color: var(--zacht); background: repeating-linear-gradient(-45deg, transparent 0 12px, rgba(31,35,40,.03) 12px 24px), var(--bg); }
+  .kaart-tekst { display: flex; flex-direction: column; gap: .35rem; padding: 1rem 1.1rem 1.2rem; flex: 1; }
+  .kaart-tekst .zacht { font-size: .92rem; line-height: 1.5; }
+  .pijl { color: var(--blauw); }
+  .tags-klein { font-size: .72rem; color: var(--zacht); margin-top: auto; padding-top: .3rem; }
+  @media (hover: none) { a.kaart:hover { transform: none; } }
+</style>

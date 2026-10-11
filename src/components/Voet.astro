@@ -1,0 +1,28 @@
+---
+import { BEDRIJF, EMAIL, GITHUB, PERSOONLIJK, ZAKELIJK } from '../data/site';
+interface Props { modus: 'licht' | 'donker' }
+const { modus } = Astro.props;
+const jaar = new Date().getFullYear();
+---
+<footer class="voet">
+  <div class="wrap voet-in">
+    {modus === 'licht' ? (
+      <>
+        <span>© {jaar} Guus Noij</span>
+        <span><a href={GITHUB}>GitHub</a> · <a href={`mailto:${EMAIL}`}>Email</a> · <a href={`${ZAKELIJK}privacy/`}>Privacy</a> · <a href={ZAKELIJK} data-naar="donker">Business</a></span>
+      </>
+    ) : (
+      <>
+        <span>© {jaar} {BEDRIJF.naam} · KvK {BEDRIJF.kvk} · {BEDRIJF.plaats}</span>
+        <span><a href={`${ZAKELIJK}algemene-voorwaarden/`}>Algemene voorwaarden</a> · <a href={`${ZAKELIJK}privacy/`}>Privacy</a> · <a href={PERSOONLIJK} data-naar="licht">Over Guus</a></span>
+      </>
+    )}
+  </div>
+</footer>
+
+<style>
+  .voet { margin-top: 6rem; padding: 2rem 0 3rem; border-top: 1px solid var(--lijn); font: .8rem/1.7 var(--mono); color: var(--zacht); }
+  .voet-in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 2rem; }
+  a { color: var(--zacht); }
+  a:hover { color: var(--tekst); }
+</style>

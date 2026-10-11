@@ -1,0 +1,18 @@
+---
+// Paginakop voor een zakelijke subpagina.
+interface Props { label: string; titel: string; vt?: string }
+const { label, titel, vt } = Astro.props;
+---
+<header class="wrap zk">
+  <p class="label">{label}</p>
+  <h1 style={vt ? `view-transition-name: z-${vt}` : undefined}>{titel}<span class="punt">.</span></h1>
+  <slot />
+</header>
+
+<style>
+  .zk { padding-top: 5rem; }
+  @media (max-width: 40rem) { .zk { padding-top: 2.5rem; } }
+  .label { margin-bottom: 1.25rem; }
+  h1 { font-size: clamp(2.1rem, 5.5vw, 3.6rem); width: fit-content; }
+  .zk :global(.intro) { font-size: 1.2rem; max-width: 40rem; margin-top: 1.5rem; }
+</style>

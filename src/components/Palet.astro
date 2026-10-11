@@ -1,0 +1,87 @@
+---
+// Commandopalet (⌘K, Ctrl+K of /): snel naar een pagina, plus een paar verborgen commando's.
+import { ZAKELIJK, EMAIL } from '../data/site';
+const items = [
+  { label: 'About me', hint: 'section', href: '/#about' },
+  { label: 'Experience', hint: 'section', href: '/#experience' },
+  { label: 'Projects', hint: 'section', href: '/#projects' },
+  { label: 'Skills', hint: 'section', href: '/#skills' },
+  { label: 'Bonsai', hint: 'page', href: '/interests/bonsai' },
+  { label: 'Contact', hint: 'section', href: '/#contact' },
+  { label: 'Pet the cats', hint: 'secret', actie: 'aai' },
+  { label: 'Switch to business mode', hint: 'secret', href: ZAKELIJK, naar: 'donker' },
+  { label: 'Send me an email', hint: 'action', href: `mailto:${EMAIL}` },
+];
+---
+<dialog class="palet" aria-label="Command palette" transition:persist="palet">
+  <form method="dialog" class="palet-in">
+    <input type="text" placeholder="Where to? Try 'bonsai'…" autocomplete="off" spellcheck="false" aria-label="Search" />
+    <ul role="listbox">
+      {items.map((i) => (
+        <li role="option">
+          <a href={i.href ?? '#'} data-actie={i.actie} data-naar={i.naar}>
+            <span>{i.label}</span><span class="hint">{i.hint}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="leeg" hidden>Nothing here… yet.</p>
+    <p class="voetje"><kbd>↑</kbd><kbd>↓</kbd> navigate · <kbd>↵</kbd> open · <kbd>esc</kbd> close</p>
+  </form>
+</dialog>
+
+<script>
+  const dlg = document.querySelector<HTMLDialogElement>('dialog.palet')!;
+  const input = dlg.querySelector('input')!;
+  const links = [...dlg.querySelectorAll<HTMLAnchorElement>('li a')];
+  const leeg = dlg.querySelector<HTMLElement>('.leeg')!;
+  let actief = 0;
+
+  const zichtbaar = () => links.filter((a) => !a.parentElement!.hidden);
+  function markeer() {
+    zichtbaar().forEach((a, i) => a.classList.toggle('actief', i === actief));
+  }
+  function filter() {
+    const q = input.value.trim().toLowerCase();
+    links.forEach((a) => {
+      const geheim = a.querySelector('.hint')!.textContent === 'secret';
+      // Geheime commando's verschijnen pas als je iets typt.
+      a.parentElement!.hidden = q ? !a.textContent!.toLowerCase().includes(q) : geheim;
+    });
+    leeg.hidden = zichtbaar().length > 0 || /sudo/.test(q) ? true : false;
+    if (/sudo/.test(q)) { leeg.hidden = false; leeg.textContent = 'Nice try. 😄'; } else leeg.textContent = 'Nothing here… yet.';
+    actief = 0; markeer();
+  }
+  function open() { input.value = ''; filter(); dlg.showModal(); input.focus(); }
+
+  document.addEventListener('keydown', (e) => {
+    const typt = (e.target as HTMLElement).closest('input, textarea, [contenteditable]');
+    if ((e.key === 'k' && (e.metaKey || e.ctrlKey)) || (e.key === '/' && !typt)) { e.preventDefault(); dlg.open ? dlg.close() : open(); }
+  });
+  document.addEventListener('click', (e) => { if ((e.target as Element).closest('[data-palet-open]')) open(); });
+  input.addEventListener('input', filter);
+  input.addEventListener('keydown', (e) => {
+    const z = zichtbaar();
+    if (e.key === 'ArrowDown') { e.preventDefault(); actief = (actief + 1) % z.length; markeer(); }
+    if (e.key === 'ArrowUp') { e.preventDefault(); actief = (actief - 1 + z.length) % z.length; markeer(); }
+    if (e.key === 'Enter') { e.preventDefault(); z[actief]?.click(); }
+  });
+  links.forEach((a) => a.addEventListener('click', (e) => {
+    if (a.dataset.actie === 'aai') { e.preventDefault(); dlg.close(); document.dispatchEvent(new CustomEvent('aai-katten')); }
+    else if (!a.dataset.naar) dlg.close();
+  }));
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+</script>
+
+<style>
+  .palet { width: min(34rem, calc(100vw - 2rem)); margin-top: 14vh; padding: 0; border: 1px solid var(--lijn); border-radius: .8rem; background: var(--bg); color: var(--tekst); box-shadow: 0 30px 80px -20px rgba(0,0,0,.35); }
+  .palet::backdrop { background: rgba(15, 18, 24, .35); backdrop-filter: blur(3px); }
+  input { width: 100%; border: 0; border-bottom: 1px solid var(--lijn); background: transparent; color: inherit; font: 1.05rem/1 var(--mono); padding: 1.1rem 1.2rem; outline: none; }
+  ul { list-style: none; margin: 0; padding: .4rem; max-height: 50vh; overflow: auto; }
+  li a { display: flex; justify-content: space-between; padding: .7rem .8rem; border-radius: .45rem; color: var(--tekst); text-decoration: none; }
+  li a.actief, li a:hover { background: var(--vlak); }
+  .hint { font: .7rem/1.6 var(--mono); color: var(--zacht); text-transform: uppercase; letter-spacing: .08em; }
+  .leeg { margin: 0; padding: 1rem 1.2rem; color: var(--zacht); font-family: var(--mono); }
+  .voetje { margin: 0; padding: .7rem 1.2rem; border-top: 1px solid var(--lijn); font: .72rem/1 var(--mono); color: var(--zacht); }
+  kbd { font: inherit; border: 1px solid var(--lijn); border-radius: .25rem; padding: .1rem .3rem; margin-right: .15rem; }
+</style>

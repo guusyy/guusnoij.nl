@@ -1,0 +1,43 @@
+---
+import Basis from '../../layouts/Basis.astro';
+import Voet from '../../components/Voet.astro';
+import Kop from '../../components/zakelijk/Kop.astro';
+import { EMAIL_ZAKELIJK as EMAIL, BEDRIJF } from '../../data/site';
+import { navZakelijk } from '../../data/zakelijk';
+---
+<Basis modus="donker" taal="nl" ondertitel="DESIGN & DEVELOPMENT" nav={navZakelijk}
+  titel="Contact · Guus Noij Design & Development"
+  omschrijving="Neem contact op met Guus Noij Design & Development.">
+  <Kop label="Contact" titel="Laten we praten" vt="contact">
+    <p class="intro">Vertel me waar je tegenaan loopt, of wat je wilt bouwen. Ik denk vrijblijvend mee en reageer binnen twee werkdagen.</p>
+  </Kop>
+
+  <section class="eerst">
+    <div class="wrap kanalen">
+      <a class="kanaal" href={`mailto:${EMAIL}`}>
+        <span class="label">E-mail</span>
+        <span class="waarde">{EMAIL}</span>
+        <span class="pijl">→</span>
+      </a>
+      <div class="kanaal gegevens">
+        <span class="label">Gegevens</span>
+        <span>{BEDRIJF.naam}<br />{BEDRIJF.straat}<br />{BEDRIJF.postcode} {BEDRIJF.plaats}<br />KvK {BEDRIJF.kvk}</span>
+      </div>
+    </div>
+  </section>
+
+  <Voet slot="voet" modus="donker" />
+</Basis>
+
+<style>
+  .eerst { padding-top: 2.5rem; }
+  .kanalen { display: grid; gap: 1rem; }
+  @media (min-width: 52rem) { .kanalen { grid-template-columns: 1.4fr 1fr; } }
+  .kanaal { position: relative; display: flex; flex-direction: column; gap: .8rem; padding: 2rem; border: 1px solid var(--lijn); border-radius: .8rem; background: var(--vlak); color: var(--tekst); text-decoration: none; }
+  a.kanaal { background: radial-gradient(30rem 14rem at 100% 100%, rgba(59,130,246,.2), transparent 70%), var(--vlak); transition: border-color .2s; }
+  a.kanaal:hover { border-color: var(--blauw); }
+  .waarde { font: 500 clamp(1.1rem, 3vw, 1.6rem)/1.3 var(--mono); word-break: break-all; }
+  .pijl { position: absolute; right: 2rem; top: 1.8rem; color: var(--blauw); transition: transform .2s; }
+  a.kanaal:hover .pijl { transform: translateX(4px); }
+  .gegevens span:last-child { color: var(--zacht); }
+</style>

@@ -1,0 +1,65 @@
+---
+import Basis from '../../layouts/Basis.astro';
+import Voet from '../../components/Voet.astro';
+import Kop from '../../components/zakelijk/Kop.astro';
+import { BEDRIJF, EMAIL_ZAKELIJK } from '../../data/site';
+import { navZakelijk } from '../../data/zakelijk';
+const bijgewerkt = 'oktober 2026';
+---
+<Basis modus="donker" taal="nl" ondertitel="DESIGN & DEVELOPMENT" nav={navZakelijk}
+  titel="Privacyverklaring · Guus Noij Design & Development"
+  omschrijving="Hoe Guus Noij Design & Development omgaat met persoonsgegevens op guusnoij.nl en zakelijk.guusnoij.nl.">
+  <Kop label={`Bijgewerkt ${bijgewerkt}`} titel="Privacyverklaring">
+    <p class="intro">Kort gezegd: deze websites verzamelen niets over jou. Geen formulieren, geen cookies, geen tracking.</p>
+  </Kop>
+
+  <section class="eerst">
+    <div class="wrap tekst">
+      <h2>Wie ben ik</h2>
+      <p>
+        {BEDRIJF.naam}, {BEDRIJF.straat}, {BEDRIJF.postcode} {BEDRIJF.plaats}, KvK {BEDRIJF.kvk}, is verantwoordelijk voor deze websites
+        (guusnoij.nl en zakelijk.guusnoij.nl). Vragen over privacy kun je mailen naar <a href={`mailto:${EMAIL_ZAKELIJK}`}>{EMAIL_ZAKELIJK}</a>.
+      </p>
+
+      <h2>Bezoek aan de website</h2>
+      <p>
+        De websites gebruiken geen cookies, geen analyse- of advertentietools en geen formulieren. Een paar kleine voorkeuren
+        (zoals hoe vaak je de katten hebt geaaid) worden alleen in je eigen browser bewaard en nooit naar mij verstuurd.
+      </p>
+      <p>
+        De websites worden gehost door Cloudflare. Om de sites veilig en bereikbaar te houden, verwerkt Cloudflare technische gegevens
+        zoals je IP-adres. Cloudflare doet dat als verwerker en is aangesloten bij het EU-VS Data Privacy Framework.
+      </p>
+
+      <h2>Contact per e-mail</h2>
+      <p>
+        Mail je mij, dan gebruik ik je naam, e-mailadres en wat je schrijft alleen om je vraag te beantwoorden en, als we
+        samenwerken, voor de uitvoering van de opdracht. Ik bewaar het niet langer dan nodig, of zolang de wet dat vraagt (bijvoorbeeld
+        voor de administratie). Ik verkoop of deel je gegevens niet met anderen.
+      </p>
+
+      <h2>Klanten</h2>
+      <p>
+        Voor klanten van wie ik e-mail, websites of andere gegevens beheer, gelden de afspraken in de verwerkersovereenkomst die we
+        samen sluiten.
+      </p>
+
+      <h2>Jouw rechten</h2>
+      <p>
+        Je kunt altijd vragen welke gegevens ik van je heb, en ze laten aanpassen of verwijderen. Mail daarvoor naar
+        {' '}<a href={`mailto:${EMAIL_ZAKELIJK}`}>{EMAIL_ZAKELIJK}</a>. Ben je niet tevreden over hoe ik met je gegevens omga, dan kun je een
+        klacht indienen bij de <a href="https://www.autoriteitpersoonsgegevens.nl/">Autoriteit Persoonsgegevens</a>.
+      </p>
+    </div>
+  </section>
+
+  <Voet slot="voet" modus="donker" />
+</Basis>
+
+<style>
+  .eerst { padding-top: 2rem; }
+  .tekst { max-width: 46rem; }
+  .tekst h2 { font-size: 1rem; text-transform: none; letter-spacing: 0; margin: 2.25rem 0 .75rem; }
+  .tekst h2:first-child { margin-top: 0; }
+  .tekst p { color: #c9d1d9; }
+</style>

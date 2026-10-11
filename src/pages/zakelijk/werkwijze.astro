@@ -1,0 +1,45 @@
+---
+import Basis from '../../layouts/Basis.astro';
+import Voet from '../../components/Voet.astro';
+import Kop from '../../components/zakelijk/Kop.astro';
+import Cta from '../../components/zakelijk/Cta.astro';
+import { ZAKELIJK } from '../../data/site';
+import { navZakelijk, stappen } from '../../data/zakelijk';
+---
+<Basis modus="donker" taal="nl" ondertitel="DESIGN & DEVELOPMENT" nav={navZakelijk}
+  titel="Werkwijze · Guus Noij Design & Development"
+  omschrijving="Hoe een traject met Guus Noij Design & Development verloopt: kennismaken, voorstel, maken en beheer.">
+  <Kop label="Werkwijze" titel="Hoe ik werk" vt="werkwijze">
+    <p class="intro">Helder, snel en zonder verrassingen. Je hebt steeds contact met degene die het maakt.</p>
+  </Kop>
+
+  <section>
+    <div class="wrap">
+      <ol class="stappen">
+        {stappen.map((s, i) => (
+          <li>
+            <span class="mono stap">{String(i + 1).padStart(2, '0')}</span>
+            <div><h2>{s.titel}</h2><p class="zacht">{s.tekst}</p></div>
+          </li>
+        ))}
+      </ol>
+      <p class="zacht afspraken">
+        Ik werk met duidelijke afspraken: vooraf een duidelijke prijsafspraak, <a href={`${ZAKELIJK}algemene-voorwaarden/`}>algemene voorwaarden</a>{' '}
+        en, waar ik met jouw gegevens werk, een verwerkersovereenkomst (AVG).
+      </p>
+    </div>
+  </section>
+
+  <Cta />
+  <Voet slot="voet" modus="donker" />
+</Basis>
+
+<style>
+  .stappen { list-style: none; padding: 0; margin: 0; display: grid; }
+  .stappen li { display: grid; grid-template-columns: 4rem 1fr; gap: 1rem; padding: 2rem 0; border-top: 1px solid var(--lijn); position: relative; }
+  .stappen li::before { content: ''; position: absolute; top: -1px; left: 0; width: 2.5rem; height: 1px; background: var(--blauw); }
+  .stap { font-size: 1.6rem; color: var(--blauw); line-height: 1.2; }
+  .stappen h2 { font-size: 1.25rem; text-transform: none; letter-spacing: 0; margin-bottom: .5rem; }
+  .stappen p { margin: 0; max-width: 40rem; font-size: 1.05rem; }
+  .afspraken { border-top: 1px solid var(--lijn); padding-top: 2rem; max-width: 44rem; }
+</style>

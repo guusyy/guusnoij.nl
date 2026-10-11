@@ -1,0 +1,28 @@
+---
+import { EMAIL_ZAKELIJK as EMAIL } from '../../data/site';
+interface Props { titel?: string; tekst?: string }
+const { titel = 'Zullen we kennismaken?', tekst = 'Vertel me waar je tegenaan loopt. Ik denk vrijblijvend mee en laat je weten wat er mogelijk is.' } = Astro.props;
+---
+<section>
+  <div class="wrap">
+    <div class="cta">
+      <div>
+        <h2 class="kop2">{titel}</h2>
+        <p class="groot">{tekst}</p>
+      </div>
+      <a class="knop vol groot-knop" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    display: grid; gap: 2rem; align-items: end; padding: 2.5rem;
+    border: 1px solid var(--lijn); border-radius: .75rem;
+    background: radial-gradient(40rem 20rem at 100% 100%, rgba(59, 130, 246, .18), transparent 70%), var(--vlak);
+  }
+  .kop2 { margin-bottom: 1.25rem; }
+  @media (min-width: 52rem) { .cta { grid-template-columns: 1fr auto; } }
+  .groot { max-width: 34rem; margin: 0; }
+  .groot-knop { font-size: 1rem; padding: 1rem 1.4rem; }
+</style>

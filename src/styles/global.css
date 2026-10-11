@@ -1,0 +1,114 @@
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/500.css';
+@import '@fontsource/ibm-plex-mono/700.css';
+@import '@fontsource/ibm-plex-sans/400.css';
+@import '@fontsource/ibm-plex-sans/500.css';
+@import '@fontsource/ibm-plex-sans/600.css';
+
+/* Eén ontwerp, twee kanten: persoonlijk is licht, zakelijk is dezelfde site omgekeerd (donker). */
+:root {
+  --blauw: #3b82f6;
+  --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --sans: 'IBM Plex Sans', system-ui, sans-serif;
+  --breed: 68rem;
+}
+[data-modus='licht'] {
+  --bg: #fbfbf9;
+  --vlak: #f2f2ee;
+  --tekst: #1f2328;
+  --zacht: #57606a;
+  --lijn: #d8dad3;
+  --link: #2563eb;
+  color-scheme: light;
+}
+[data-modus='donker'] {
+  --bg: #0a0d12;
+  --vlak: #11161e;
+  --tekst: #e6edf3;
+  --zacht: #8b949e;
+  --lijn: #232a33;
+  --link: #6ea8fe;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--tekst);
+  font: 400 1.0625rem/1.65 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--blauw); color: #fff; }
+a { color: var(--link); text-underline-offset: .2em; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+img { max-width: 100%; display: block; }
+:focus-visible { outline: 2px solid var(--blauw); outline-offset: 3px; }
+
+.wrap { max-width: var(--breed); margin: 0 auto; padding: 0 1.5rem; }
+
+/* Typografie */
+.mono { font-family: var(--mono); }
+.label {
+  font: 500 .75rem/1 var(--mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--zacht);
+}
+h1, h2, h3 { font-family: var(--mono); line-height: 1.2; margin: 0; letter-spacing: -.01em; }
+h1 { font-size: clamp(2rem, 5.2vw, 3.4rem); font-weight: 700; letter-spacing: -.03em; }
+h2 { font-size: 1.05rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+h3 { font-size: 1.05rem; font-weight: 500; }
+p { margin: 0 0 1em; }
+.zacht { color: var(--zacht); }
+.punt { color: var(--blauw); }
+
+/* Secties met de ~~~-scheiding van flaviocopes, maar rustiger */
+section { padding: 4.5rem 0 0; }
+section > .wrap > h2 { margin-bottom: 2rem; display: flex; gap: .75rem; align-items: baseline; }
+section > .wrap > h2::before { content: '~~~'; color: var(--blauw); font-weight: 400; letter-spacing: 0; }
+
+.lijst { list-style: none; padding: 0; margin: 0; }
+.lijst > li { padding: 1.1rem 0; border-top: 1px solid var(--lijn); }
+.lijst > li:last-child { border-bottom: 1px solid var(--lijn); }
+
+.knop {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font: 500 .9rem/1 var(--mono);
+  padding: .85rem 1.15rem;
+  border: 1px solid var(--lijn);
+  color: var(--tekst);
+  text-decoration: none;
+  border-radius: .4rem;
+  transition: border-color .15s, background .15s;
+}
+.knop:hover { border-color: var(--blauw); }
+.knop.vol { background: var(--blauw); border-color: var(--blauw); color: #fff; }
+.knop.vol:hover { background: #2f6fe0; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .na-wissel main, .na-wissel footer { animation: verschijn .5s ease-out both; }
+}
+@keyframes verschijn { from { opacity: 0; transform: translateY(6px); } }
+
+/* Paginawissels: Astro ClientRouter (astro:transitions) in Basis.astro. */
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .28s; }
+
+/* Notion-achtige paginakop: kruimelpad, groot icoon, titel */
+.kruimels { font: .78rem/1.4 var(--mono); color: var(--zacht); display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 2rem; }
+.kruimels a { color: var(--zacht); text-decoration: none; }
+.kruimels a:hover { color: var(--tekst); }
+.kruimels span[aria-hidden] { opacity: .5; }
+.pagina-icoon { font-size: 3.4rem; line-height: 1; display: inline-block; margin-bottom: 1rem; }
+
+/* Zakelijke (donkere) kant: een zachte blauwe gloed bovenaan. */
+[data-modus='donker'] body {
+  background-image: radial-gradient(60rem 30rem at 15% -5%, rgba(59, 130, 246, .14), transparent 70%);
+  background-repeat: no-repeat;
+}
+.kop2 { margin-bottom: 2rem; display: flex; gap: .75rem; align-items: baseline; }
+.kop2::before { content: '~~~'; color: var(--blauw); font-weight: 400; letter-spacing: 0; }
+.groot { font-size: 1.15rem; }
+[data-modus='donker'] .groot, [data-modus='donker'] .intro { color: #c9d1d9; }
+.knoppen { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 2rem; }
