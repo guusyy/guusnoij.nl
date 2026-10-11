@@ -9,7 +9,7 @@ const ZAKELIJK = 'zakelijk.guusnoij.nl';
 const OUD: Record<string, string> = {
   '/about-me': '/#about',
   '/resume': '/#experience',
-  '/interests': '/#elsewhere',
+  '/interests': '/#more-about-me',
   '/contact': '/#contact',
   '/bonsai': '/interests/bonsai/',
 };
