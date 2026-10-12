@@ -69,10 +69,16 @@ async function nietGevonden(pad: string, request: Request): Promise<Response> {
 export default {
   async fetch(request) {
     const res = await serveer(request);
-    // De echte domeinen zijn vindbaar (sinds 11-10-2026); de preview op workers.dev blijft buiten zoekmachines.
-    if (!new URL(request.url).hostname.endsWith('.workers.dev')) return res;
+    const url = new URL(request.url);
     const kop = new Headers(res.headers);
-    kop.set('X-Robots-Tag', 'noindex, nofollow');
+    // Caching in de browser: bestanden met een hash in de naam veranderen nooit, dus een jaar bewaren.
+    // Overige vaste bestanden een dag; HTML blijft altijd controleren (ETag), zodat een deploy meteen zichtbaar is.
+    if (res.status === 200) {
+      if (url.pathname.startsWith('/_astro/')) kop.set('Cache-Control', 'public, max-age=31536000, immutable');
+      else if (/\.(png|jpe?g|webp|svg|ico|pdf|woff2?)$/.test(url.pathname)) kop.set('Cache-Control', 'public, max-age=86400');
+    }
+    // De echte domeinen zijn vindbaar (sinds 11-10-2026); de preview op workers.dev blijft buiten zoekmachines.
+    if (url.hostname.endsWith('.workers.dev')) kop.set('X-Robots-Tag', 'noindex, nofollow');
     return new Response(res.body, { status: res.status, statusText: res.statusText, headers: kop });
   },
 } satisfies ExportedHandler;
