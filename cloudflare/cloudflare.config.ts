@@ -7,8 +7,14 @@ export default defineConfig(({ mode }) => ({
     name: mode === 'preview' ? 'guusnoij-web-preview' : 'guusnoij-web',
     compatibilityDate: '2026-10-06',
     entrypoint,
-    // Elk verzoek eerst langs de Worker: die kiest op hostnaam welke kant van de site hij serveert.
-    assets: { runWorkerFirst: true, htmlHandling: 'auto-trailing-slash', notFoundHandling: 'none' },
+    // Pagina's eerst langs de Worker: die kiest op hostnaam welke kant van de site hij serveert.
+    // Vaste bestanden (zelfde op beide kanten) direct uit de assets: dat telt niet als Worker-verzoek.
+    // Hun Cache-Control staat daarom in public/_headers.
+    assets: {
+      runWorkerFirst: ['/*', '!/_astro/*', '!/og/*', '!/favicon.svg', '!/apple-touch-icon.png'],
+      htmlHandling: 'auto-trailing-slash',
+      notFoundHandling: 'none',
+    },
     env: {
       ASSETS: bindings.assets(),
     },

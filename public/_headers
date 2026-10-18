@@ -1,0 +1,12 @@
+# Alleen voor bestanden die zonder Worker worden geserveerd (zie runWorkerFirst in cloudflare.config.ts).
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/og/*
+  Cache-Control: public, max-age=86400
+
+/favicon.svg
+  Cache-Control: public, max-age=86400
+
+/apple-touch-icon.png
+  Cache-Control: public, max-age=86400
