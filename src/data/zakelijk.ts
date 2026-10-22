@@ -17,11 +17,11 @@ export const herkenbaar = [
 
 export const maak = [
   { titel: 'Websites & webshops', tekst: 'Snel, goed vindbaar en eenvoudig zelf bij te houden. Een site die werkt voor je bedrijf, niet andersom.' },
-  { titel: 'Maatwerk & webapps', tekst: 'Portalen, tools en interne systemen die passen bij hoe jij werkt, in plaats van je werk aanpassen aan een pakket.' },
-  { titel: 'Dure pakketten vervangen', tekst: 'Een eigen oplossing die precies doet wat je nodig hebt. Zonder licentiekosten per gebruiker, en van jou.' },
+  { titel: 'Maatwerk & webapps', tekst: 'Portalen, tools en interne systemen die passen bij hoe jij werkt. Ook als vervanger van een duur pakket: zonder licentiekosten per gebruiker, en van jou.' },
   { titel: 'Automatisering & AI', tekst: 'Koppelingen en slimme workflows die terugkerend werk uit handen nemen, zodat jij tijd overhoudt voor je vak.' },
   { titel: 'Design & huisstijl', tekst: 'Van logo tot complete visuele identiteit, en de vertaling daarvan naar alles wat online staat.' },
-  { titel: 'Hosting & doorontwikkeling', tekst: 'Na de livegang blijf ik je partner: hosting, onderhoud, beveiliging en nieuwe wensen.' },
+  { titel: 'Digitale veiligheid', tekst: 'AI maakt aanvallen slimmer, maar ook je verdediging. Ik beveilig je websites, apps en accounts, en leer je team phishing herkennen.' },
+  { titel: 'Hosting & beheer', tekst: 'Ik houd je website actief veilig en up-to-date, met dagelijkse back-ups. Ook na de livegang blijf ik je aanspreekpunt.' },
 ];
 
 export const beloftes = [
