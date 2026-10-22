@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => ({
     // Vaste bestanden (zelfde op beide kanten) direct uit de assets: dat telt niet als Worker-verzoek.
     // Hun Cache-Control staat daarom in public/_headers.
     assets: {
-      runWorkerFirst: ['/*', '!/_astro/*', '!/og/*', '!/favicon.svg', '!/apple-touch-icon.png'],
+      runWorkerFirst: ['/*', '!/_astro/*', '!/og/*', '!/favicon.svg', '!/apple-touch-icon.png', '!/mail/*'],
       htmlHandling: 'auto-trailing-slash',
       notFoundHandling: 'none',
     },
